@@ -7,6 +7,7 @@ package simpleofficemanagement;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -305,10 +306,8 @@ public class Manager extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Manager().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Manager().setVisible(true);
         });
     }
 
@@ -344,13 +343,12 @@ public class Manager extends javax.swing.JFrame {
             for (int i = rowCount - 1; i >= 0; i--) {
                 model.removeRow(i);
             }
-            for (int i = 0; i < tabObjects.length; i++) {
-                String line = tabObjects[i].toString().trim();
+            for (Object tabObject : tabObjects) {
+                String line = tabObject.toString().trim();
                 String[] dataRow = line.split(",");
-
                 model.addRow(dataRow);
             }
-        } catch (Exception ex) {
+        } catch (FileNotFoundException ex) {
 
             System.out.println(ex);
         }
